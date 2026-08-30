@@ -2,12 +2,19 @@ const OPENAI_URL='https://api.openai.com/v1/responses';
 
 const corsHeaders={
   'Access-Control-Allow-Origin':'*',
-  'Access-Control-Allow-Headers':'Content-Type',
+  'Access-Control-Allow-Headers':'Content-Type, X-Dayframe-App-Token',
   'Access-Control-Allow-Methods':'GET,POST,OPTIONS',
   'Content-Type':'application/json; charset=utf-8'
 };
 
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:corsHeaders});}
+
+function authorize(request,env){
+  if(!env.DAYFRAME_APP_TOKEN) return {ok:false,status:503,error:'DAYFRAME_APP_TOKEN runtime secret is not configured.'};
+  const provided=request.headers.get('X-Dayframe-App-Token')||'';
+  if(!provided||provided!==env.DAYFRAME_APP_TOKEN) return {ok:false,status:401,error:'Dayframe app lock token is missing or invalid.'};
+  return {ok:true};
+}
 
 async function callOpenAI(env,body){
   if(!env.OPENAI_API_KEY) throw new Error('OPENAI_API_KEY runtime secret is not configured.');
@@ -23,24 +30,19 @@ function outputText(response){
   for(const item of response.output||[]){for(const c of item.content||[]){if(c.type==='output_text'&&c.text)parts.push(c.text);}}
   return parts.join('\n');
 }
-
-function imageResult(response){
-  const call=(response.output||[]).find(x=>x.type==='image_generation_call'&&x.result);
-  return call?.result||null;
-}
-
-function imageContent(images=[]){
-  return images.slice(0,5).map(image_url=>({type:'input_image',image_url,detail:'high'}));
-}
+function imageResult(response){return (response.output||[]).find(x=>x.type==='image_generation_call'&&x.result)?.result||null;}
+function imageContent(images=[]){return images.slice(0,5).map(image_url=>({type:'input_image',image_url,detail:'high'}));}
 
 export default {
   async fetch(request,env){
     if(request.method==='OPTIONS') return new Response(null,{headers:corsHeaders});
     const url=new URL(request.url);
     if(request.method==='GET'&&(url.pathname==='/'||url.pathname==='/health')){
-      return json({ok:true,service:'dayframe-ai',version:'V3',secretConfigured:Boolean(env.OPENAI_API_KEY)});
+      return json({ok:true,service:'dayframe-ai',version:'V4',secretConfigured:Boolean(env.OPENAI_API_KEY),appTokenConfigured:Boolean(env.DAYFRAME_APP_TOKEN)});
     }
     if(request.method!=='POST') return json({error:'Not found'},404);
+    const auth=authorize(request,env);
+    if(!auth.ok) return json({error:auth.error},auth.status);
     try{
       const body=await request.json();
       if(url.pathname==='/analyze-character'){

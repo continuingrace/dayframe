@@ -1,0 +1,13 @@
+{
+  "name":"Dayframe — Character Diary",
+  "short_name":"Dayframe",
+  "description":"나의 캐릭터로 하루의 장면을 기록하는 그림일기",
+  "start_url":"./?source=pwa",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f6f3ec",
+  "theme_color":"#f6f3ec",
+  "icons":[
+    {"src":"./assets/dayframe-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

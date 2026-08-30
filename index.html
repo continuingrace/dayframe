@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f3ec" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Dayframe" />
+  <meta name="description" content="나의 캐릭터로 하루의 장면을 기록하는 그림일기" />
+  <meta property="og:title" content="Dayframe" />
+  <meta property="og:description" content="오늘을 한 장면으로 남겨요." />
+  <meta property="og:image" content="./assets/dayframe-share.svg" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./assets/dayframe-icon.svg" />
+  <link rel="icon" href="./assets/dayframe-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css?v=1" />
+  <title>Dayframe</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CHARACTER DIARY</p>
+        <h1>Dayframe</h1>
+      </div>
+      <div class="version" id="versionBadge">V1</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-mark" aria-hidden="true">
+          <svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/><circle cx="43" cy="45" r="2.4"/><circle cx="58" cy="43" r="2.4"/></svg>
+        </div>
+        <p>나의 캐릭터로<br><strong>오늘의 한 장면을 남겨요.</strong></p>
+      </section>
+
+      <nav class="step-tabs" aria-label="제작 단계">
+        <button class="tab active" data-target="character">1 캐릭터</button>
+        <button class="tab" data-target="diary">2 오늘</button>
+        <button class="tab" data-target="create">3 만들기</button>
+      </nav>
+
+      <section class="panel active" id="character">
+        <div class="section-heading">
+          <div><span class="step">01</span><h2>나의 캐릭터</h2></div>
+          <p>기준 이미지를 등록하면 캐릭터의 고정 특징을 저장합니다.</p>
+        </div>
+        <label class="upload-card" for="characterInput">
+          <input id="characterInput" type="file" accept="image/*" multiple hidden />
+          <span class="upload-plus">＋</span>
+          <strong>기준 이미지 추가</strong>
+          <small>얼굴과 헤어가 잘 보이는 이미지 1–5장 권장</small>
+        </label>
+        <div class="thumbs" id="thumbs"></div>
+        <label class="field-label" for="characterName">캐릭터 이름</label>
+        <input class="text-field" id="characterName" placeholder="예: IHIRI" />
+        <div class="info-card">
+          <span>CHARACTER DNA</span>
+          <p id="dnaText">이미지를 등록하면 얼굴, 눈, 코, 헤어, 비율, 액세서리 등의 고정 특징을 분석해 이곳에 저장할 수 있습니다.</p>
+        </div>
+        <button class="primary" id="saveCharacter">캐릭터 저장</button>
+      </section>
+
+      <section class="panel" id="diary">
+        <div class="section-heading">
+          <div><span class="step">02</span><h2>오늘의 기록</h2></div>
+          <p>길게 정리하지 않아도 괜찮아요. 오늘 있었던 일을 편하게 적어주세요.</p>
+        </div>
+        <textarea id="diaryText" class="diary-field" placeholder="오늘은 어떤 하루였나요?\n\n예) 오전에는 디자인 수정 때문에 정신없었고, 점심에는 도시락을 먹었다. 퇴근하고 카페에 들러 라떼를 마시니 조금 살 것 같았다."></textarea>
+        <div class="choice-group">
+          <span class="field-label">기록 방식</span>
+          <div class="segmented">
+            <button class="choice active" data-mode="single">1컷 그림일기</button>
+            <button class="choice" data-mode="four">4컷 만화</button>
+          </div>
+        </div>
+        <button class="primary" id="makeHighlight">하이라이트 뽑기</button>
+        <div class="highlight-card hidden" id="highlightCard"><span>오늘의 장면</span><p id="highlightText"></p></div>
+      </section>
+
+      <section class="panel" id="create">
+        <div class="section-heading">
+          <div><span class="step">03</span><h2>장면 만들기</h2></div>
+          <p>캐릭터의 정체성을 우선해 오늘의 장면을 구성합니다.</p>
+        </div>
+        <div class="workspace">
+          <div class="preview-wrap">
+            <div class="preview" id="preview">
+              <div class="preview-placeholder">
+                <svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/></svg>
+                <strong>오늘의 장면</strong><small>생성 이미지 미리보기</small>
+              </div>
+              <div class="preview-caption" id="previewCaption">오늘의 기록</div>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="control-card">
+              <label>캡션 <input id="captionInput" value="오늘의 기록" /></label>
+              <label>글자 크기 <input id="fontSize" type="range" min="14" max="34" value="20" /></label>
+              <label>자간 <input id="letterSpacing" type="range" min="-1" max="6" value="0" step="0.2" /></label>
+              <label>행간 <input id="lineHeight" type="range" min="1" max="2" value="1.4" step="0.05" /></label>
+            </div>
+            <button class="primary" id="generateScene">장면 생성 준비</button>
+            <button class="secondary" id="resetDraft">초기화</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Dayframe</span><span>Build <strong id="footerVersion">V1</strong></span></footer>
+  </div>
+  <div class="update-toast hidden" id="updateToast">새 버전을 확인했습니다. <button id="refreshApp">새로고침</button></div>
+  <script src="./app.js?v=1"></script>
+</body>
+</html>

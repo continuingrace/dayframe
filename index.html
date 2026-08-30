@@ -14,31 +14,24 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="apple-touch-icon" href="./assets/dayframe-icon.svg" />
   <link rel="icon" href="./assets/dayframe-icon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=2" />
+  <link rel="stylesheet" href="./styles.css?v=3" />
   <title>Dayframe</title>
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar">
-      <div><p class="eyebrow">CHARACTER DIARY</p><h1>Dayframe</h1></div>
-      <div class="version" id="versionBadge">V2</div>
-    </header>
+    <header class="topbar"><div><p class="eyebrow">CHARACTER DIARY</p><h1>Dayframe</h1></div><div class="version" id="versionBadge">V3</div></header>
     <main>
-      <section class="hero">
-        <div class="hero-mark" aria-hidden="true"><svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/><circle cx="43" cy="45" r="2.4"/><circle cx="58" cy="43" r="2.4"/></svg></div>
-        <p>나의 캐릭터로<br><strong>오늘의 한 장면을 남겨요.</strong></p>
-      </section>
-      <nav class="step-tabs" aria-label="제작 단계">
-        <button class="tab active" data-target="character">1 캐릭터</button><button class="tab" data-target="diary">2 오늘</button><button class="tab" data-target="create">3 만들기</button>
-      </nav>
+      <section class="hero"><div class="hero-mark" aria-hidden="true"><svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/><circle cx="43" cy="45" r="2.4"/><circle cx="58" cy="43" r="2.4"/></svg></div><p>나의 캐릭터로<br><strong>오늘의 한 장면을 남겨요.</strong></p></section>
+      <div class="ai-status" id="aiStatus"><span class="ai-dot"></span><span id="aiStatusText">AI 연결 확인 중…</span></div>
+      <nav class="step-tabs" aria-label="제작 단계"><button class="tab active" data-target="character">1 캐릭터</button><button class="tab" data-target="diary">2 오늘</button><button class="tab" data-target="create">3 만들기</button></nav>
       <section class="panel active" id="character">
-        <div class="section-heading"><div><span class="step">01</span><h2>나의 캐릭터</h2></div><p>기준 이미지를 등록하면 이 기기에 캐릭터 기준 자료를 저장합니다.</p></div>
+        <div class="section-heading"><div><span class="step">01</span><h2>나의 캐릭터</h2></div><p>기준 이미지를 등록하면 AI가 반복 생성에 필요한 시각적 특징을 분석해 저장합니다.</p></div>
         <label class="upload-card" for="characterInput"><input id="characterInput" type="file" accept="image/*" multiple hidden /><span class="upload-plus">＋</span><strong>기준 이미지 추가</strong><small>얼굴과 헤어가 잘 보이는 이미지 1–5장 권장</small></label>
         <div class="thumbs" id="thumbs"></div>
         <label class="field-label" for="characterName">캐릭터 이름</label><input class="text-field" id="characterName" placeholder="예: IHIRI" />
-        <div class="info-card"><span>CHARACTER DNA</span><p id="dnaText">기준 이미지를 저장하면 이 기기에서 다시 불러올 수 있습니다. 실제 특징 자동 분석은 다음 연결 단계에서 추가됩니다.</p></div>
-        <button class="primary" id="saveCharacter">캐릭터 저장</button>
-        <div class="save-status hidden" id="saveStatus" role="status"><div class="status-dot"></div><div><strong>캐릭터 저장 완료</strong><p id="saveStatusText"></p></div></div>
+        <div class="info-card"><span>CHARACTER DNA</span><p id="dnaText">기준 이미지를 저장하면 AI가 캐릭터의 반복 가능한 시각 특징을 분석합니다.</p></div>
+        <button class="primary" id="saveCharacter">캐릭터 저장 + AI 분석</button>
+        <div class="save-status hidden" id="saveStatus" role="status"><div class="status-dot"></div><div><strong id="saveStatusTitle">캐릭터 저장 완료</strong><p id="saveStatusText"></p></div></div>
       </section>
       <section class="panel" id="diary">
         <div class="section-heading"><div><span class="step">02</span><h2>오늘의 기록</h2></div><p>길게 정리하지 않아도 괜찮아요. 오늘 있었던 일을 편하게 적어주세요.</p></div>
@@ -47,13 +40,13 @@
         <button class="primary" id="makeHighlight">하이라이트 뽑기</button><div class="highlight-card hidden" id="highlightCard"><span>오늘의 장면</span><p id="highlightText"></p></div>
       </section>
       <section class="panel" id="create">
-        <div class="section-heading"><div><span class="step">03</span><h2>장면 만들기</h2></div><p>캐릭터의 정체성을 우선해 오늘의 장면을 구성합니다.</p></div>
-        <div class="workspace"><div class="preview-wrap"><div class="preview" id="preview"><div class="preview-placeholder"><svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/></svg><strong>오늘의 장면</strong><small>생성 이미지 미리보기</small></div><div class="preview-caption" id="previewCaption">오늘의 기록</div></div></div><div class="controls"><div class="control-card"><label>캡션 <input id="captionInput" value="오늘의 기록" /></label><label>글자 크기 <input id="fontSize" type="range" min="14" max="34" value="20" /></label><label>자간 <input id="letterSpacing" type="range" min="-1" max="6" value="0" step="0.2" /></label><label>행간 <input id="lineHeight" type="range" min="1" max="2" value="1.4" step="0.05" /></label></div><button class="primary" id="generateScene">장면 생성 준비</button><button class="secondary" id="resetDraft">초기화</button></div></div>
+        <div class="section-heading"><div><span class="step">03</span><h2>장면 만들기</h2></div><p>저장한 캐릭터 기준 이미지와 Character DNA를 함께 사용해 장면을 생성합니다.</p></div>
+        <div class="workspace"><div class="preview-wrap"><div class="preview" id="preview"><div class="preview-placeholder" id="previewPlaceholder"><svg viewBox="0 0 96 96"><path d="M25 57c7-24 34-39 48-25 12 12-3 37-23 40-17 3-30-6-25-15Z"/><path d="M33 63c8-7 15-13 29-18"/></svg><strong>오늘의 장면</strong><small>생성 이미지 미리보기</small></div><img class="generated-image hidden" id="generatedImage" alt="생성된 오늘의 장면" /><div class="preview-caption" id="previewCaption">오늘의 기록</div></div></div><div class="controls"><div class="control-card"><label>캡션 <input id="captionInput" value="오늘의 기록" /></label><label>글자 크기 <input id="fontSize" type="range" min="14" max="34" value="20" /></label><label>자간 <input id="letterSpacing" type="range" min="-1" max="6" value="0" step="0.2" /></label><label>행간 <input id="lineHeight" type="range" min="1" max="2" value="1.4" step="0.05" /></label></div><button class="primary" id="generateScene">오늘의 장면 생성</button><p class="action-status hidden" id="generateStatus"></p><button class="secondary" id="resetDraft">초기화</button></div></div>
       </section>
     </main>
-    <footer><span>Dayframe</span><span>Build <strong id="footerVersion">V2</strong></span></footer>
+    <footer><span>Dayframe</span><span>Build <strong id="footerVersion">V3</strong></span></footer>
   </div>
   <div class="update-toast hidden" id="updateToast">새 버전을 확인했습니다. <button id="refreshApp">새로고침</button></div>
-  <script src="./app.js?v=2"></script>
+  <script src="./app.js?v=3"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-(()=>{const PATCH_VERSION='V18';$('#versionBadge').textContent=PATCH_VERSION;$('#footerVersion').textContent=PATCH_VERSION;
+(()=>{const PATCH_VERSION='V21';$('#versionBadge').textContent=PATCH_VERSION;$('#footerVersion').textContent=PATCH_VERSION;
 const styleKeys=['font','size','spacing','line','color','align','valign','box','boxColor','boxOpacity','borderColor','padding','border','lineTexture'];
 let syncFour=true;
 function ensureTextDefaults(t){if(!t)return;t.boxOpacity=t.boxOpacity??1;t.lineTexture=t.lineTexture??0.28;t.valign=t.valign||'middle';}
@@ -15,5 +15,5 @@ function installStyleSyncListeners(){['fontFamily','fontColor','fontSize','lette
 const oldSync=sync;sync=function(){oldSync();S.texts.forEach(ensureTextDefaults);copyMasterStyle();controls();draw();};
 window.addEventListener('DOMContentLoaded',()=>{refreshMasterUI();addBoxControls();installStyleSyncListeners();});
 if(document.readyState!=='loading'){refreshMasterUI();addBoxControls();installStyleSyncListeners();}
-if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js?v=18').catch(()=>{});}
+if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js?v=21').catch(()=>{});}
 })();

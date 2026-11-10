@@ -1,41 +1,42 @@
 <template>
 <style>
+@font-face{font-family:'Pretendard';font-weight:400;src:url('assets/fonts/Pretendard-Regular.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:500;src:url('assets/fonts/Pretendard-Medium.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:600;src:url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:700;src:url('assets/fonts/Pretendard-Bold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:800;src:url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:900;src:url('assets/fonts/Pretendard-Black.woff2') format('woff2')}
-#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#fff;overflow:hidden}
-.ln{overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
-.in{display:block;will-change:transform}
-#s1-tag{position:absolute;left:80px;top:290px;font-size:30px;font-weight:700;letter-spacing:.16em;color:#9DB9FF;display:flex;gap:18px}
-#s1-tag b{color:#FFB547;font-weight:800}
-#s1-chips{position:absolute;left:80px;top:352px;display:flex;gap:16px}
-.s1-chip{font-size:30px;font-weight:700;padding:14px 28px;border:2px solid rgba(255,255,255,.55);border-radius:999px;letter-spacing:.04em;background:rgba(10,15,36,.35)}
-#s1-title{position:absolute;left:80px;top:1170px;width:920px}
-.s1-big{font-size:132px;font-weight:900;line-height:1.12;letter-spacing:-.035em}
-#s1-row{display:flex;align-items:center;gap:36px}
-#s1-year{color:#FFB547}
-#s1-slogan{font-size:31px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.88);letter-spacing:-.01em}
+#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#16171A;overflow:hidden;letter-spacing:-0.01em;word-break:keep-all}
+.wrap{position:absolute;inset:0}
+.eyebrow{position:absolute;left:0;width:1080px;text-align:center;font-size:28px;font-weight:600;letter-spacing:.12em;color:#5754D5}
+.title{position:absolute;left:80px;width:920px;text-align:center;font-weight:600;line-height:1.42;letter-spacing:-0.015em}
+.muted{color:#5A5F70}
+.acc{color:#5754D5}
+.card{background:#fff;border-radius:32px;box-shadow:0 14px 40px rgba(22,23,26,.06)}
+.s1-c{position:absolute;padding:26px 34px;border-radius:24px}
+.s1-c .k{font-size:28px;font-weight:500;color:#5754D5;line-height:1.4}
+.s1-c .v{margin-top:4px;font-size:34px;font-weight:600;line-height:1.4}
+#s1-t{top:820px;font-size:58px}
+#s1-sub{position:absolute;left:80px;top:1000px;width:920px;text-align:center;font-size:30px;font-weight:400;line-height:1.5}
 </style>
 <div id="root" data-composition-id="s1" data-width="1080" data-height="1920">
-  <div id="s1-tag"><b>01</b> EVENT</div>
-  <div id="s1-chips"><div class="s1-chip">WASHINGTON D.C.</div><div class="s1-chip">2026.10.28–30</div></div>
-  <div id="s1-title">
-    <div id="s1-l1" class="ln"><span class="in s1-big">ICF Converge</span></div>
-    <div id="s1-row">
-      <div id="s1-l2" class="ln"><span class="in s1-big" id="s1-year">2026</span></div>
-      <div id="s1-slogan">A World of Connection:<br/>Igniting Human Potential</div>
-    </div>
-  </div>
+ <div id="s1-wrap" class="wrap">
+  <div id="s1-c1" class="s1-c card" style="left:96px;top:340px"><div class="k">장소</div><div class="v">Washington D.C.</div></div>
+  <div id="s1-c2" class="s1-c card" style="left:600px;top:440px"><div class="k">일정</div><div class="v">2026.10.28–30</div></div>
+  <div id="s1-c3" class="s1-c card" style="left:150px;top:1220px"><div class="k">주최</div><div class="v">ICF</div></div>
+  <div id="s1-c4" class="s1-c card" style="left:540px;top:1300px"><div class="k">주요 화두</div><div class="v">AI · 신뢰 · 사내코칭</div></div>
+  <div id="s1-t" class="title">글로벌 코칭 트렌드를 읽는<br/><span class="acc">ICF Converge 2026</span></div>
+  <div id="s1-sub" class="muted">A World of Connection: Igniting Human Potential</div>
+ </div>
 </div>
 <script>
 const tl=gsap.timeline({paused:true});
-tl.fromTo("#s1-tag",{opacity:0,x:-30},{opacity:1,x:0,duration:.5,ease:"power3.out"},.05);
-tl.fromTo("#s1-chips .s1-chip",{opacity:0,y:34},{opacity:1,y:0,duration:.6,ease:"power3.out",stagger:.12},.1);
-tl.fromTo("#s1-l1 .in",{yPercent:125,skewY:9},{yPercent:0,skewY:0,duration:.85,ease:"expo.out"},.3);
-tl.fromTo("#s1-l2 .in",{yPercent:125,skewY:9},{yPercent:0,skewY:0,duration:.85,ease:"expo.out"},.45);
-tl.fromTo("#s1-slogan",{opacity:0,x:40},{opacity:1,x:0,duration:.6,ease:"power3.out"},.5);
+const rise=(sel,t,d=.7,y=28)=>tl.fromTo(sel,{opacity:0,y},{opacity:1,y:0,duration:d,ease:"power2.out"},t);
+[["#s1-c1",-6,0],["#s1-c2",5,.08],["#s1-c3",4,.16],["#s1-c4",-4,.24]].forEach(([id,r,t])=>{
+  tl.fromTo(id,{opacity:0,y:40,rotation:r*1.6},{opacity:1,y:0,rotation:r,duration:.9,ease:"power3.out"},t);
+  tl.to(id,{y:-14,duration:1.4,ease:"sine.inOut"},t+.9);
+});
+tl.fromTo("#s1-t",{opacity:.7,y:22},{opacity:1,y:0,duration:.8,ease:"power2.out"},0);
+rise("#s1-sub",.3,.7,20);
+tl.to("#s1-wrap",{opacity:0,y:-12,duration:.3,ease:"power2.in"},2.24);
 window.__timelines["s1"]=tl;
 </script>
 </template>

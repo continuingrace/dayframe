@@ -1,54 +1,48 @@
 <template>
 <style>
+@font-face{font-family:'Pretendard';font-weight:400;src:url('assets/fonts/Pretendard-Regular.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:500;src:url('assets/fonts/Pretendard-Medium.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:600;src:url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:700;src:url('assets/fonts/Pretendard-Bold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:800;src:url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:900;src:url('assets/fonts/Pretendard-Black.woff2') format('woff2')}
-#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#fff;overflow:hidden}
-.ln{overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
-.in{display:block;will-change:transform}
-#s3-tag{position:absolute;left:80px;top:290px;font-size:30px;font-weight:700;letter-spacing:.16em;color:#9DB9FF;display:flex;gap:18px}
-#s3-tag b{color:#FFB547;font-weight:800}
-.s3-row{position:absolute;left:80px;width:920px;height:280px}
-.s3-idx{font-size:28px;font-weight:800;letter-spacing:.14em;color:#FFB547}
-.s3-word{font-size:116px;font-weight:900;line-height:1.08;letter-spacing:-.035em}
-.s3-desc{margin-top:8px;font-size:34px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.8)}
-.s3-rule{position:absolute;left:0;bottom:0;width:920px;height:2px;background:rgba(255,255,255,.35);transform-origin:left center}
-#s3-note{position:absolute;left:80px;top:1430px;width:920px;font-size:28px;font-weight:500;line-height:1.4;color:rgba(255,255,255,.58)}
+#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#16171A;overflow:hidden;letter-spacing:-0.01em;word-break:keep-all}
+.wrap{position:absolute;inset:0}
+.eyebrow{position:absolute;left:0;width:1080px;text-align:center;font-size:28px;font-weight:600;letter-spacing:.12em;color:#5754D5}
+.title{position:absolute;left:80px;width:920px;text-align:center;font-weight:600;line-height:1.42;letter-spacing:-0.015em}
+.muted{color:#5A5F70}
+.acc{color:#5754D5}
+.card{background:#fff;border-radius:32px;box-shadow:0 14px 40px rgba(22,23,26,.06)}
+#s3-t{top:400px;font-size:52px}
+#s3-s{position:absolute;left:0;top:490px;width:1080px;text-align:center;font-size:30px;font-weight:500;line-height:1.5}
+#s3-card{position:absolute;left:80px;top:600px;width:920px;padding:60px 56px}
+.s3-i + .s3-i{margin-top:52px}
+.s3-h{font-size:40px;font-weight:600;line-height:1.4}
+.s3-d{margin-top:12px;font-size:31px;font-weight:400;line-height:1.5}
+.s3-d::before{content:"•";margin-right:14px;color:#9a9eac}
+#s3-n{position:absolute;left:80px;top:1210px;width:920px;text-align:center;font-size:28px;font-weight:400;line-height:1.5}
 </style>
 <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
-  <div id="s3-tag"><b>03</b> THREE LENSES</div>
-  <div id="s3-r1" class="s3-row" style="top:430px">
-    <div class="s3-idx">01</div>
-    <div class="ln"><span class="in s3-word" style="color:#fff">HUMAN</span></div>
-    <div class="s3-desc">인간의 창의성·관계·깊이 있는 대화</div>
-    <div class="s3-rule"></div>
+ <div id="s3-wrap" class="wrap">
+  <div id="s3-t" class="title">세 가지 핵심 관점</div>
+  <div id="s3-s" class="acc">Human · Trusted · Responsible</div>
+  <div id="s3-card" class="card">
+   <div id="s3-i1" class="s3-i"><div class="s3-h"><span class="acc">01.</span> HUMAN</div><div class="s3-d muted">인간의 창의성·관계·깊이 있는 대화</div></div>
+   <div id="s3-i2" class="s3-i"><div class="s3-h"><span class="acc">02.</span> TRUSTED</div><div class="s3-d muted">전문성·윤리·연구 기반의 신뢰</div></div>
+   <div id="s3-i3" class="s3-i"><div class="s3-h"><span class="acc">03.</span> RESPONSIBLE</div><div class="s3-d muted">기술·개인정보·조직 적용의 책임 기준</div></div>
   </div>
-  <div id="s3-r2" class="s3-row" style="top:760px">
-    <div class="s3-idx">02</div>
-    <div class="ln"><span class="in s3-word" style="color:#9DB9FF">TRUSTED</span></div>
-    <div class="s3-desc">전문성·윤리·연구 기반의 신뢰</div>
-    <div class="s3-rule"></div>
-  </div>
-  <div id="s3-r3" class="s3-row" style="top:1090px">
-    <div class="s3-idx">03</div>
-    <div class="ln"><span class="in s3-word" style="color:#FFB547">RESPONSIBLE</span></div>
-    <div class="s3-desc">기술·개인정보·조직 적용의 책임 기준</div>
-    <div class="s3-rule"></div>
-  </div>
-  <div id="s3-note">※ 공식 슬로건이 아닌 분석 프레임</div>
+  <div id="s3-n" class="muted">※ 공식 슬로건이 아닌, 의제를 정리한 분석 프레임</div>
+ </div>
 </div>
 <script>
 const tl=gsap.timeline({paused:true});
-tl.fromTo("#s3-tag",{opacity:0,x:-30},{opacity:1,x:0,duration:.5,ease:"power3.out"},.2);
-[["#s3-r1",.25],["#s3-r2",.6],["#s3-r3",.95]].forEach(([id,t])=>{
-  tl.fromTo(id+" .s3-idx",{opacity:0,x:-20},{opacity:1,x:0,duration:.4,ease:"power3.out"},t);
-  tl.fromTo(id+" .in",{yPercent:125,skewY:8},{yPercent:0,skewY:0,duration:.8,ease:"expo.out"},t+.05);
-  tl.fromTo(id+" .s3-desc",{opacity:0,y:22},{opacity:1,y:0,duration:.55,ease:"power3.out"},t+.3);
-  tl.fromTo(id+" .s3-rule",{scaleX:0},{scaleX:1,duration:.7,ease:"power3.inOut"},t+.15);
-});
-tl.fromTo("#s3-note",{opacity:0},{opacity:1,duration:.6,ease:"power2.out"},1.0);
+const rise=(sel,t,d=.7,y=28)=>tl.fromTo(sel,{opacity:0,y},{opacity:1,y:0,duration:d,ease:"power2.out"},t);
+rise("#s3-t",.1);
+rise("#s3-s",.25,.6,16);
+rise("#s3-card",.35,.8,40);
+rise("#s3-i1",.55,.6,18);
+rise("#s3-i2",.8,.6,18);
+rise("#s3-i3",1.05,.6,18);
+tl.fromTo("#s3-n",{opacity:0},{opacity:1,duration:.5,ease:"power2.out"},1.2);
+tl.to("#s3-wrap",{opacity:0,y:-12,duration:.3,ease:"power2.in"},3.24);
 window.__timelines["s3"]=tl;
 </script>
 </template>

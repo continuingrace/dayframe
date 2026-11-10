@@ -1,46 +1,37 @@
 <template>
 <style>
+@font-face{font-family:'Pretendard';font-weight:400;src:url('assets/fonts/Pretendard-Regular.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:500;src:url('assets/fonts/Pretendard-Medium.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:600;src:url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:700;src:url('assets/fonts/Pretendard-Bold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:800;src:url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:900;src:url('assets/fonts/Pretendard-Black.woff2') format('woff2')}
-#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#fff;overflow:hidden}
-.ln{overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
-.in{display:block;will-change:transform}
-#s2-tag{position:absolute;left:80px;top:290px;font-size:30px;font-weight:700;letter-spacing:.16em;color:#9DB9FF;display:flex;gap:18px}
-#s2-tag b{color:#FFB547;font-weight:800}
-#s2-lines{position:absolute;left:80px;top:610px;width:920px}
-.s2-t{font-size:90px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
-.s2-dim{color:rgba(255,255,255,.62)}
+#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#16171A;overflow:hidden;letter-spacing:-0.01em;word-break:keep-all}
+.wrap{position:absolute;inset:0}
+.eyebrow{position:absolute;left:0;width:1080px;text-align:center;font-size:28px;font-weight:600;letter-spacing:.12em;color:#5754D5}
+.title{position:absolute;left:80px;width:920px;text-align:center;font-weight:600;line-height:1.42;letter-spacing:-0.015em}
+.muted{color:#5A5F70}
+.acc{color:#5754D5}
+.card{background:#fff;border-radius:32px;box-shadow:0 14px 40px rgba(22,23,26,.06)}
+#s2-e{top:720px}
+#s2-a{position:absolute;left:80px;top:800px;width:920px;text-align:center;font-size:42px;font-weight:500;line-height:1.5}
+#s2-t{top:890px;font-size:64px}
 #s2-em{position:relative;display:inline-block;isolation:isolate}
-#s2-bar{position:absolute;left:-10px;right:-10px;bottom:8px;height:48%;background:#3B6BFF;z-index:-1;transform-origin:left center}
-#s2-rule{position:absolute;left:80px;top:1130px;width:120px;height:6px;background:#FFB547;transform-origin:left center}
-#s2-cap{position:absolute;left:80px;top:1170px;width:900px}
-#s2-cap .k{font-size:28px;font-weight:800;letter-spacing:.16em;color:#FFB547}
-#s2-cap .d{margin-top:14px;font-size:34px;font-weight:600;line-height:1.4;color:rgba(255,255,255,.82)}
+#s2-bar{position:absolute;left:-6px;right:-6px;bottom:6px;height:34%;background:#E3E6FF;border-radius:6px;z-index:-1;transform-origin:left center}
 </style>
 <div id="root" data-composition-id="s2" data-width="1080" data-height="1920">
-  <div id="s2-tag"><b>02</b> KEY MESSAGE</div>
-  <div id="s2-lines">
-    <div id="s2-a" class="ln"><span class="in s2-t s2-dim">세계의 코칭이</span></div>
-    <div id="s2-b" class="ln"><span class="in s2-t s2-dim">향하는 방향을 알면,</span></div>
-    <div id="s2-c" class="ln"><span class="in s2-t">우리의 <span id="s2-em"><i id="s2-bar"></i>다음 질문</span>이</span></div>
-    <div id="s2-d" class="ln"><span class="in s2-t">달라집니다.</span></div>
-  </div>
-  <div id="s2-rule"></div>
-  <div id="s2-cap"><div class="k">GLOBAL PERSPECTIVE</div></div>
+ <div id="s2-wrap" class="wrap">
+  <div id="s2-e" class="eyebrow">KEY MESSAGE</div>
+  <div id="s2-a" class="muted">세계의 코칭이 향하는 방향을 알면,</div>
+  <div id="s2-t" class="title">우리의 <span id="s2-em" class="acc"><i id="s2-bar"></i>다음 질문</span>이<br/>달라집니다.</div>
+ </div>
 </div>
 <script>
 const tl=gsap.timeline({paused:true});
-tl.fromTo("#s2-tag",{opacity:0,x:-30},{opacity:1,x:0,duration:.5,ease:"power3.out"},.2);
-tl.fromTo("#s2-a .in",{yPercent:125,skewY:7},{yPercent:0,skewY:0,duration:.8,ease:"expo.out"},.3);
-tl.fromTo("#s2-b .in",{yPercent:125,skewY:7},{yPercent:0,skewY:0,duration:.8,ease:"expo.out"},.42);
-tl.fromTo("#s2-c .in",{yPercent:125,skewY:7},{yPercent:0,skewY:0,duration:.8,ease:"expo.out"},.8);
-tl.fromTo("#s2-d .in",{yPercent:125,skewY:7},{yPercent:0,skewY:0,duration:.8,ease:"expo.out"},.92);
-tl.fromTo("#s2-bar",{scaleX:0},{scaleX:1,duration:.55,ease:"power3.inOut"},1.2);
-tl.fromTo("#s2-rule",{scaleX:0},{scaleX:1,duration:.5,ease:"power3.out"},1.2);
-tl.fromTo("#s2-cap",{opacity:0,y:24},{opacity:1,y:0,duration:.6,ease:"power3.out"},1.2);
+const rise=(sel,t,d=.7,y=28)=>tl.fromTo(sel,{opacity:0,y},{opacity:1,y:0,duration:d,ease:"power2.out"},t);
+rise("#s2-e",.1,.6,16);
+rise("#s2-a",.2);
+rise("#s2-t",.55,.8);
+tl.fromTo("#s2-bar",{scaleX:0},{scaleX:1,duration:.6,ease:"power2.inOut"},1.2);
+tl.to("#s2-wrap",{opacity:0,y:-12,duration:.3,ease:"power2.in"},2.54);
 window.__timelines["s2"]=tl;
 </script>
 </template>

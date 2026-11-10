@@ -1,0 +1,62 @@
+<template>
+<style>
+@font-face{font-family:'Pretendard';font-weight:500;src:url('assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;src:url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;src:url('assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:800;src:url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:900;src:url('assets/fonts/Pretendard-Black.woff2') format('woff2')}
+#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#fff;overflow:hidden}
+.ln{overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.in{display:block;will-change:transform}
+#root{background:#F3EFE6;color:#0A0F24}
+#s4-tag{position:absolute;left:80px;top:290px;font-size:30px;font-weight:700;letter-spacing:.16em;color:#0A0F24;display:flex;gap:18px}
+#s4-tag b{color:#3B6BFF;font-weight:800}
+#s4-l1{position:absolute;left:80px;top:410px;font-size:36px;font-weight:700;color:rgba(10,15,36,.66)}
+#s4-big{position:absolute;left:80px;top:455px;width:920px;font-size:186px;font-weight:900;letter-spacing:-.04em;line-height:1.05;color:#3B6BFF;white-space:nowrap}
+#s4-big small{font-size:80px;letter-spacing:-.02em;margin-left:10px;color:#0A0F24}
+#s4-ul{position:absolute;left:80px;top:716px;width:920px;height:10px;background:linear-gradient(90deg,#3B6BFF,#FFB547);transform-origin:left center;border-radius:5px}
+.s4-card{position:absolute;top:820px;width:440px;height:420px;border-radius:40px;padding:40px 36px;display:flex;flex-direction:column;justify-content:space-between}
+#s4-c1{left:80px;background:#0A0F24;color:#fff}
+#s4-c2{left:560px;background:#3B6BFF;color:#fff}
+.s4-lab{font-size:30px;font-weight:700;line-height:1.35}
+#s4-c1 .s4-lab{color:#9DB9FF}
+#s4-c2 .s4-lab{color:rgba(255,255,255,.9)}
+.s4-num{font-size:112px;font-weight:900;letter-spacing:-.04em;line-height:1;white-space:nowrap}
+.s4-num small{font-size:42px;font-weight:800;letter-spacing:-.01em;margin-left:8px}
+#s4-c1 .s4-num small{color:#FFB547}
+#s4-track{height:14px;border-radius:7px;background:rgba(255,255,255,.3);margin-top:18px;overflow:hidden}
+#s4-fill{height:100%;width:73%;background:#FFB547;border-radius:7px;transform-origin:left center}
+#s4-src{position:absolute;left:80px;top:1300px;width:920px;font-size:28px;font-weight:600;line-height:1.4;color:rgba(10,15,36,.6)}
+</style>
+<div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+  <div id="s4-tag"><b>04</b> BY THE NUMBERS</div>
+  <div id="s4-l1">글로벌 전문코치 추정 인원</div>
+  <div id="s4-big"><span id="s4-n1">0</span><small>명</small></div>
+  <div id="s4-ul"></div>
+  <div id="s4-c1" class="s4-card">
+    <div class="s4-lab">글로벌 코칭 산업<br/>연간 매출 (약·추정)</div>
+    <div class="s4-num"><span id="s4-n2">0.0</span><small>억 달러</small></div>
+  </div>
+  <div id="s4-c2" class="s4-card">
+    <div class="s4-lab">자격·인증 기대를<br/>인식한 코치</div>
+    <div><div class="s4-num"><span id="s4-n3">0</span><small>%</small></div><div id="s4-track"><div id="s4-fill"></div></div></div>
+  </div>
+  <div id="s4-src">출처 · 2025 ICF Global Coaching Study (추정치)</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+const n1=document.getElementById("s4-n1"),n2=document.getElementById("s4-n2"),n3=document.getElementById("s4-n3");
+const o={a:0,b:0,c:0};
+tl.fromTo("#s4-tag",{opacity:0,x:-30},{opacity:1,x:0,duration:.5,ease:"power3.out"},.25);
+tl.fromTo("#s4-l1",{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:"power3.out"},.3);
+tl.fromTo("#s4-big",{opacity:0,y:60},{opacity:1,y:0,duration:.7,ease:"expo.out"},.35);
+tl.fromTo(o,{a:0},{a:122974,duration:1.3,ease:"power3.out",onUpdate:()=>{n1.textContent=Math.round(o.a).toLocaleString("en-US");}},.4);
+tl.fromTo("#s4-ul",{scaleX:0},{scaleX:1,duration:.8,ease:"power3.inOut"},.8);
+tl.fromTo(".s4-card",{opacity:0,y:70},{opacity:1,y:0,duration:.7,ease:"expo.out",stagger:.14},.95);
+tl.fromTo(o,{b:0},{b:53.4,duration:1.1,ease:"power3.out",onUpdate:()=>{n2.textContent=o.b.toFixed(1);}},1.1);
+tl.fromTo(o,{c:0},{c:73,duration:1.1,ease:"power3.out",onUpdate:()=>{n3.textContent=String(Math.round(o.c));}},1.25);
+tl.fromTo("#s4-fill",{scaleX:0},{scaleX:1,duration:1.1,ease:"power3.out"},1.25);
+tl.fromTo("#s4-src",{opacity:0},{opacity:1,duration:.5,ease:"power2.out"},0.9);
+window.__timelines["s4"]=tl;
+</script>
+</template>

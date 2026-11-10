@@ -1,0 +1,133 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0a0f24; }
+    #bg-orb1 { position: absolute; width: 1400px; height: 1400px; left: -520px; top: -380px; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(59,107,255,.6), rgba(59,107,255,0)); }
+    #bg-orb2 { position: absolute; width: 1200px; height: 1200px; left: 280px; top: 980px; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255,106,77,.34), rgba(255,106,77,0)); }
+    #bg-grid { position: absolute; left: 0; top: -60px; width: 1080px; height: 2040px;
+      background-image: radial-gradient(rgba(255,255,255,.16) 1.6px, transparent 1.7px); background-size: 60px 60px; opacity: .45; }
+    #bg-globe { position: absolute; left: 140px; top: 430px; width: 800px; height: 800px; }
+    #bg-globe svg { width: 800px; height: 800px; overflow: visible; }
+  </style>
+  <div id="root" data-composition-id="bg" data-width="1080" data-height="1920">
+    <div id="bg-orb1"></div>
+    <div id="bg-orb2"></div>
+    <div id="bg-grid"></div>
+    <div id="bg-globe">
+      <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bg-sphere" cx="40%" cy="35%" r="70%">
+            <stop offset="0" stop-color="#5b86ff" stop-opacity=".30"/>
+            <stop offset="1" stop-color="#0a0f24" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="400" cy="400" r="330" fill="url(#bg-sphere)"/>
+        <circle id="bg-ring" cx="400" cy="400" r="330" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="2.5" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 400 400)"/>
+        <g id="bg-dots"></g>
+        <g id="bg-arcs" fill="none" stroke-linecap="round"></g>
+        <g id="bg-nodes"></g>
+      </svg>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const R = 330, CX = 400, CY = 400, NS = "http://www.w3.org/2000/svg";
+      const rad = (d) => (d * Math.PI) / 180;
+      const mk = (tag, attrs, parent) => {
+        const e = document.createElementNS(NS, tag);
+        for (const k in attrs) e.setAttribute(k, attrs[k]);
+        parent.appendChild(e);
+        return e;
+      };
+      let seed = 11;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+
+      // dot sphere
+      const dots = [];
+      const gd = document.getElementById("bg-dots");
+      for (let la = -80; la <= 80; la += 8) {
+        const step = 8 / Math.cos(rad(la));
+        for (let lo = -180; lo < 180; lo += step) {
+          if (rnd() < 0.4) continue;
+          dots.push({ la, lo, el: mk("circle", { r: 2, fill: "#cfe0ff" }, gd) });
+        }
+      }
+      // cities: Seoul is index 0, Washington D.C. index 1
+      const cities = [
+        [37.5, 127], [38.9, -77], [51.5, 0], [-23.5, -46.6], [-33.9, 151],
+        [25, 55], [1.3, 103.8], [-1.3, 36.8], [34, -118], [35.7, 139.7], [19, 72.8],
+      ];
+      const links = [[0,9],[0,6],[0,5],[6,4],[5,2],[2,1],[1,3],[1,8],[5,7],[10,5],[10,6],[9,6]];
+      const gn = document.getElementById("bg-nodes");
+      const ga = document.getElementById("bg-arcs");
+      const nodes = cities.map((c, i) => ({
+        la: c[0], lo: c[1],
+        ring: mk("circle", { r: 10, fill: "none", stroke: i < 2 ? "#FFB547" : "#9DB9FF", "stroke-width": 2 }, gn),
+        dot: mk("circle", { r: i < 2 ? 11 : 7, fill: i < 2 ? "#FFB547" : "#ffffff" }, gn),
+      }));
+      const arcs = links.map((l, i) =>
+        mk("path", { fill: "none", stroke: i % 3 === 0 ? "#FFB547" : "#7fa4ff", "stroke-width": 3, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, ga)
+      );
+      const P = (la, lo, c) => {
+        const a = rad(la), d = rad(lo - c);
+        return { x: CX + R * Math.cos(a) * Math.sin(d), y: CY - R * Math.sin(a), z: Math.cos(a) * Math.cos(d) };
+      };
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      function update(t) {
+        const c = 100 - 8 * t; // center longitude: Asia (Seoul) -> Americas (D.C.)
+        for (const d of dots) {
+          const p = P(d.la, d.lo, c);
+          if (p.z <= 0) { d.el.setAttribute("opacity", 0); continue; }
+          d.el.setAttribute("cx", p.x.toFixed(1));
+          d.el.setAttribute("cy", p.y.toFixed(1));
+          d.el.setAttribute("r", (1.1 + 2 * p.z).toFixed(2));
+          d.el.setAttribute("opacity", (0.1 + 0.55 * p.z).toFixed(2));
+        }
+        const pts = nodes.map((n, i) => {
+          const p = P(n.la, n.lo, c);
+          const vis = clamp(p.z * 4);
+          n.dot.setAttribute("cx", p.x.toFixed(1)); n.dot.setAttribute("cy", p.y.toFixed(1));
+          n.dot.setAttribute("opacity", vis.toFixed(2));
+          const f = (t * 0.7 + i * 0.37) % 1;
+          n.ring.setAttribute("cx", p.x.toFixed(1)); n.ring.setAttribute("cy", p.y.toFixed(1));
+          n.ring.setAttribute("r", (10 + 30 * f).toFixed(1));
+          n.ring.setAttribute("opacity", ((1 - f) * 0.7 * vis).toFixed(2));
+          return { p, vis };
+        });
+        links.forEach((l, i) => {
+          const a = pts[l[0]], b = pts[l[1]];
+          const mx = (a.p.x + b.p.x) / 2, my = (a.p.y + b.p.y) / 2;
+          const cx = CX + (mx - CX) * 1.28, cy = CY + (my - CY) * 1.28;
+          arcs[i].setAttribute("d", `M${a.p.x.toFixed(1)} ${a.p.y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${b.p.x.toFixed(1)} ${b.p.y.toFixed(1)}`);
+          arcs[i].setAttribute("opacity", (Math.min(a.vis, b.vis) * 0.9).toFixed(2));
+        });
+      }
+      update(0);
+
+      const tl = gsap.timeline({ paused: true });
+      const clock = { t: 0 };
+      tl.to(clock, { t: 15, duration: 15, ease: "none", onUpdate: () => update(clock.t) }, 0);
+
+      // globe: intro draw, then travels per scene
+      tl.fromTo("#bg-ring", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.out" }, 0);
+      tl.fromTo("#bg-arcs path", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out", stagger: 0.1 }, 0.5);
+      tl.fromTo("#bg-globe", { x: 0, y: -90, scale: 0.62, opacity: 0.4 }, { x: 0, y: -90, scale: 1, opacity: 1, duration: 1.1, ease: "power3.out" }, 0);
+      tl.to("#bg-globe", { x: 300, y: -410, scale: 0.7, opacity: 0.6, duration: 0.9, ease: "power3.inOut" }, 2.2);
+      tl.to("#bg-globe", { x: -270, y: 170, scale: 1.15, opacity: 0.2, duration: 0.9, ease: "power3.inOut" }, 5.1);
+      tl.to("#bg-globe", { x: 0, y: 0, scale: 1, opacity: 0, duration: 0.9, ease: "power3.inOut" }, 8.7);
+      tl.to("#bg-globe", { x: 280, y: 790, scale: 1.25, opacity: 0.55, duration: 0.9, ease: "power3.inOut" }, 11.7);
+
+      // ambient light
+      tl.fromTo("#bg-orb1", { x: 0, y: 0 }, { x: 260, y: 520, duration: 4, ease: "sine.inOut" }, 0);
+      tl.to("#bg-orb1", { x: -120, y: 1200, duration: 5, ease: "sine.inOut" }, 4);
+      tl.to("#bg-orb1", { x: 200, y: 300, duration: 6, ease: "sine.inOut" }, 9);
+      tl.fromTo("#bg-orb2", { x: 0, y: 0 }, { x: -380, y: -620, duration: 5, ease: "sine.inOut" }, 0);
+      tl.to("#bg-orb2", { x: 100, y: -200, duration: 5, ease: "sine.inOut" }, 5);
+      tl.to("#bg-orb2", { x: -200, y: -500, duration: 5, ease: "sine.inOut" }, 10);
+      tl.fromTo("#bg-grid", { y: 0 }, { y: 60, duration: 15, ease: "none" }, 0);
+
+      window.__timelines["bg"] = tl;
+    })();
+  </script>
+</template>

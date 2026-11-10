@@ -1,0 +1,41 @@
+<template>
+<style>
+@font-face{font-family:'Pretendard';font-weight:500;src:url('assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;src:url('assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;src:url('assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:800;src:url('assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:900;src:url('assets/fonts/Pretendard-Black.woff2') format('woff2')}
+#root{position:absolute;inset:0;font-family:"Pretendard",sans-serif;color:#fff;overflow:hidden}
+.ln{overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.in{display:block;will-change:transform}
+#s1-tag{position:absolute;left:80px;top:290px;font-size:30px;font-weight:700;letter-spacing:.16em;color:#9DB9FF;display:flex;gap:18px}
+#s1-tag b{color:#FFB547;font-weight:800}
+#s1-chips{position:absolute;left:80px;top:352px;display:flex;gap:16px}
+.s1-chip{font-size:30px;font-weight:700;padding:14px 28px;border:2px solid rgba(255,255,255,.55);border-radius:999px;letter-spacing:.04em;background:rgba(10,15,36,.35)}
+#s1-title{position:absolute;left:80px;top:1170px;width:920px}
+.s1-big{font-size:132px;font-weight:900;line-height:1.12;letter-spacing:-.035em}
+#s1-row{display:flex;align-items:center;gap:36px}
+#s1-year{color:#FFB547}
+#s1-slogan{font-size:31px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.88);letter-spacing:-.01em}
+</style>
+<div id="root" data-composition-id="s1" data-width="1080" data-height="1920">
+  <div id="s1-tag"><b>01</b> EVENT</div>
+  <div id="s1-chips"><div class="s1-chip">WASHINGTON D.C.</div><div class="s1-chip">2026.10.28–30</div></div>
+  <div id="s1-title">
+    <div id="s1-l1" class="ln"><span class="in s1-big">ICF Converge</span></div>
+    <div id="s1-row">
+      <div id="s1-l2" class="ln"><span class="in s1-big" id="s1-year">2026</span></div>
+      <div id="s1-slogan">A World of Connection:<br/>Igniting Human Potential</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#s1-tag",{opacity:0,x:-30},{opacity:1,x:0,duration:.5,ease:"power3.out"},.05);
+tl.fromTo("#s1-chips .s1-chip",{opacity:0,y:34},{opacity:1,y:0,duration:.6,ease:"power3.out",stagger:.12},.1);
+tl.fromTo("#s1-l1 .in",{yPercent:125,skewY:9},{yPercent:0,skewY:0,duration:.85,ease:"expo.out"},.3);
+tl.fromTo("#s1-l2 .in",{yPercent:125,skewY:9},{yPercent:0,skewY:0,duration:.85,ease:"expo.out"},.45);
+tl.fromTo("#s1-slogan",{opacity:0,x:40},{opacity:1,x:0,duration:.6,ease:"power3.out"},.5);
+window.__timelines["s1"]=tl;
+</script>
+</template>

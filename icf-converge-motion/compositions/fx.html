@@ -1,0 +1,39 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #fx-a, #fx-b { position: absolute; left: 0; top: 0; width: 1080px; height: 2300px;
+      border-radius: 540px 540px 0 0 / 230px 230px 0 0; }
+    #fx-b { z-index: 2; }
+    #fx-a { z-index: 1; }
+    #fx-grain { position: absolute; inset: 0; z-index: 5; opacity: .07;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+  </style>
+  <div id="root" data-composition-id="fx" data-width="1080" data-height="1920">
+    <div id="fx-a" data-layout-allow-overflow></div>
+    <div id="fx-b" data-layout-allow-overflow></div>
+    <div id="fx-grain"></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const IN = 1980, COVER = -250, OUT = -2560;
+      tl.set("#fx-a, #fx-b", { y: IN }, 0);
+      // boundary time, stripe colour (a), face colour (b)
+      const cuts = [
+        [2.6, "#3B6BFF", "#0A0F24"],
+        [5.5, "#FF6A4D", "#3B6BFF"],
+        [9.1, "#3B6BFF", "#F3EFE6"],
+        [12.1, "#FFB547", "#0A0F24"],
+      ];
+      cuts.forEach(([b, ca, cb]) => {
+        tl.set("#fx-a", { backgroundColor: ca, y: IN }, b - 0.5);
+        tl.set("#fx-b", { backgroundColor: cb, y: IN }, b - 0.5);
+        tl.fromTo("#fx-a", { y: IN }, { y: COVER, duration: 0.4, ease: "power3.inOut" }, b - 0.42);
+        tl.fromTo("#fx-b", { y: IN }, { y: COVER, duration: 0.4, ease: "power3.inOut" }, b - 0.36);
+        tl.fromTo("#fx-b", { y: COVER }, { y: OUT, duration: 0.42, ease: "power3.inOut" }, b + 0.02);
+        tl.fromTo("#fx-a", { y: COVER }, { y: OUT, duration: 0.42, ease: "power3.inOut" }, b + 0.08);
+      });
+      window.__timelines["fx"] = tl;
+    })();
+  </script>
+</template>

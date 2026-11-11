@@ -12,7 +12,6 @@
 .acc{color:#5754D5}
 .card{background:#fff;border-radius:32px;box-shadow:0 14px 40px rgba(22,23,26,.06)}
 #s4-t{top:400px;font-size:52px}
-#s4-s{position:absolute;left:0;top:490px;width:1080px;text-align:center;font-size:30px;font-weight:500;line-height:1.5}
 .s4-r{position:absolute;left:80px;width:920px;height:184px;padding:0 52px;display:flex;align-items:center;justify-content:space-between;border-radius:28px}
 .s4-k{font-size:34px;font-weight:600;line-height:1.4}
 .s4-k small{display:block;font-size:28px;font-weight:400;color:#5A5F70;margin-top:2px}
@@ -20,15 +19,14 @@
 .s4-v small{font-size:34px;font-weight:500;margin-left:6px}
 #s4-track{position:absolute;left:52px;right:52px;bottom:16px;height:8px;border-radius:4px;background:#E9EBF5}
 #s4-fill{height:100%;width:73%;border-radius:4px;background:#5754D5;transform-origin:left center}
-#s4-src{position:absolute;left:80px;top:1260px;width:920px;text-align:center;font-size:28px;font-weight:400;line-height:1.5}
+#s4-src{position:absolute;left:80px;top:1220px;width:920px;text-align:center;font-size:28px;font-weight:400;line-height:1.5}
 </style>
 <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
  <div id="s4-wrap" class="wrap">
   <div id="s4-t" class="title">데이터로 보는 글로벌 코칭</div>
-  <div id="s4-s" class="acc">2025 ICF Global Coaching Study</div>
-  <div id="s4-r1" class="s4-r card" style="top:600px"><div class="s4-k">글로벌 전문코치<small>추정 인원</small></div><div class="s4-v"><span id="s4-n1">0</span><small>명</small></div></div>
-  <div id="s4-r2" class="s4-r card" style="top:814px"><div class="s4-k">코칭 산업 연간 매출<small>추정치</small></div><div class="s4-v"><small style="margin:0 8px 0 0">약</small><span id="s4-n2">0.0</span><small>억 달러</small></div></div>
-  <div id="s4-r3" class="s4-r card" style="top:1028px"><div class="s4-k">자격·인증 기대 인식<small>코치 응답 기준</small></div><div class="s4-v"><span id="s4-n3">0</span><small>%</small></div><div id="s4-track"><div id="s4-fill"></div></div></div>
+  <div id="s4-r1" class="s4-r card" style="top:560px"><div class="s4-k">글로벌 전문코치<small>추정 인원</small></div><div class="s4-v"><span id="s4-n1">0</span><small>명</small></div></div>
+  <div id="s4-r2" class="s4-r card" style="top:774px"><div class="s4-k">코칭 산업 연간 매출<small>추정치</small></div><div class="s4-v"><small style="margin:0 8px 0 0">약</small><span id="s4-n2">0.0</span><small>억 달러</small></div></div>
+  <div id="s4-r3" class="s4-r card" style="top:988px"><div class="s4-k">고객·조직이 자격·인증을 기대<small>그렇다고 응답한 코치의 비율</small></div><div class="s4-v"><span id="s4-n3">0</span><small>%</small></div><div id="s4-track"><div id="s4-fill"></div></div></div>
   <div id="s4-src" class="muted">출처 · 2025 ICF Global Coaching Study (추정치)</div>
  </div>
 </div>
@@ -38,16 +36,15 @@ const rise=(sel,t,d=.7,y=28)=>tl.fromTo(sel,{opacity:0,y},{opacity:1,y:0,duratio
 const n1=document.getElementById("s4-n1"),n2=document.getElementById("s4-n2"),n3=document.getElementById("s4-n3");
 const o={a:0,b:0,c:0};
 rise("#s4-t",.1);
-rise("#s4-s",.25,.6,16);
-rise("#s4-r1",.35,.7,30);
-rise("#s4-r2",.5,.7,30);
-rise("#s4-r3",.65,.7,30);
+rise("#s4-r1",.28,.7,30);
+rise("#s4-r2",.36,.7,30);
+rise("#s4-r3",.38,.7,30);
 tl.fromTo(o,{a:0},{a:122974,duration:1.2,ease:"power2.out",onUpdate:()=>{n1.textContent=Math.round(o.a).toLocaleString("en-US");}},.45);
 tl.fromTo(o,{b:0},{b:53.4,duration:1.2,ease:"power2.out",onUpdate:()=>{n2.textContent=o.b.toFixed(1);}},.6);
 tl.fromTo(o,{c:0},{c:73,duration:1.2,ease:"power2.out",onUpdate:()=>{n3.textContent=String(Math.round(o.c));}},.75);
 tl.fromTo("#s4-fill",{scaleX:0},{scaleX:1,duration:1.2,ease:"power2.out"},.75);
 tl.fromTo("#s4-src",{opacity:0},{opacity:1,duration:.5,ease:"power2.out"},.75);
-tl.to("#s4-wrap",{opacity:0,y:-12,duration:.3,ease:"power2.in"},2.64);
+tl.to("#s4-wrap",{opacity:0,y:-12,duration:.26,ease:"power2.in"},2.72);
 window.__timelines["s4"]=tl;
 </script>
 </template>
